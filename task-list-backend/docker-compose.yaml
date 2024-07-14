@@ -1,0 +1,16 @@
+volumes:
+  db:
+
+services:
+  mysql:
+    container_name: mysql
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=taskList'
+      - 'MYSQL_PASSWORD=admin'
+      - 'MYSQL_ROOT_PASSWORD=admin'
+      - 'MYSQL_USER=admin'
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
