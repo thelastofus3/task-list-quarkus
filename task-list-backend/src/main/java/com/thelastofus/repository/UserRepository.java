@@ -17,4 +17,8 @@ public class UserRepository implements PanacheRepository<User> {
         return find("email", email).firstResultOptional();
     }
 
+    public User save(User user) {
+        persist(user);
+        return user;
+    }
 }

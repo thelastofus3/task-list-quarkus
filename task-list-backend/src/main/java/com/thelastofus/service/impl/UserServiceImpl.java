@@ -1,15 +1,18 @@
 package com.thelastofus.service.impl;
 
+import com.thelastofus.config.PasswordEncoder;
 import com.thelastofus.dto.user.UserRequest;
 import com.thelastofus.dto.user.UserResponse;
 import com.thelastofus.exception.EmailAlreadyExistsException;
 import com.thelastofus.exception.ResourceNotFoundException;
+import com.thelastofus.mapper.UserMapper;
 import com.thelastofus.model.Role;
 import com.thelastofus.model.User;
 import com.thelastofus.repository.UserRepository;
 import com.thelastofus.service.UserService;
+import io.quarkus.cache.CacheKey;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.Cacheable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,20 +23,21 @@ import lombok.experimental.FieldDefaults;
 public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
-//    UserMapper userMapper;
-//    PasswordEncoder passwordEncoder;
+    UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
     @Override
 //    @Cacheable(value = "UserService::getById", key = "#id")
-    public UserResponse getById(Long id) {
+    @CacheResult(cacheName = "userService::getById")
+    public UserResponse getById(@CacheKey Long id) {
         User user = userRepository.findById(id);
-//        return userMapper.convertToUserResponse(user);
-        return null;
+        return userMapper.convertToUserResponse(user);
     }
 
     @Override
 //    @Cacheable(value = "UserService::getByUsername", key = "#username")
-    public UserResponse getByUsername(String username) {
+    @CacheResult(cacheName = "userService::getByUsername")
+    public UserResponse getByUsername(@CacheKey String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found."));
         return UserResponse.builder()
@@ -45,7 +49,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
 //    @Cacheable(value = "UserService::getByEmail", key = "#email")
-    public User getByEmail(String email) {
+    @CacheResult(cacheName = "userService::getByeMAIL")
+    public User getByEmail(@CacheKey String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
@@ -60,14 +65,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("This email is already taken");
         }
-//        return userRepository.save(User.builder()
-//                .username(userRequest.getUsername())
-//                .email(userRequest.getEmail())
-//                .password(userRequest.getPassword())
-//                .role(Role.ROLE_USER)
-//                .build());
-//    }
-        return null;
+        return userRepository.save(User.builder()
+                .username(userRequest.getUsername())
+                .email(userRequest.getEmail())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .role(Role.ROLE_USER)
+                .build());
     }
 
 }
