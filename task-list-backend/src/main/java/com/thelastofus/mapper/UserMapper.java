@@ -9,6 +9,4 @@ public interface UserMapper {
 
     UserResponse convertToUserResponse(User user);
 
-//    User convertToUser(JwtEntity jwt);
-
 }

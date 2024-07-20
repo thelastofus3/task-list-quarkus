@@ -1,5 +1,6 @@
 package com.thelastofus.dto.user;
 
+import com.thelastofus.password.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @Setter
 @Builder
 @ToString
+@PasswordMatches
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "User Register Request")

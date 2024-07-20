@@ -1,6 +1,5 @@
 package com.thelastofus.service.impl;
 
-import com.thelastofus.exception.PasswordMatchesException;
 import com.thelastofus.exception.UsernameAlreadyExistsException;
 import com.thelastofus.security.config.PasswordEncoder;
 import com.thelastofus.dto.user.UserRequest;
@@ -29,7 +28,6 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-//    @Cacheable(value = "UserService::getById", key = "#id")
     @CacheResult(cacheName = "userService::getById")
     public UserResponse getById(@CacheKey Long id) {
         User user = userRepository.findById(id);
@@ -37,7 +35,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @Cacheable(value = "UserService::getByUsername", key = "#username")
     @CacheResult(cacheName = "userService::getByUsername")
     public UserResponse getByUsername(@CacheKey String username) {
         User user = userRepository.findByUsername(username)
@@ -50,7 +47,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @Cacheable(value = "UserService::getByEmail", key = "#email")
     @CacheResult(cacheName = "userService::getByEmail")
     public User getByEmail(@CacheKey String email) {
         return userRepository.findByEmail(email)
@@ -80,9 +76,6 @@ public class UserServiceImpl implements UserService {
         }
         if (userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistsException("This username is already taken");
-        }
-        if (!userRequest.getPassword().equals(userRequest.getMatchingPassword())) {
-            throw new PasswordMatchesException("Passwords do not match");
         }
     }
 

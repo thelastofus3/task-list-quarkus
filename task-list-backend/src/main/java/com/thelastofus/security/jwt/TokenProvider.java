@@ -23,7 +23,7 @@ public class TokenProvider {
     JwtProperties jwtProperties;
 
     public JwtResponse generateToken(User user) {
-        String accessToken = createAccessToken(user.getUsername(), user.getRole());
+        String accessToken = createAccessToken(user);
         return JwtResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -31,17 +31,18 @@ public class TokenProvider {
                 .build();
     }
 
-    private String createAccessToken(String username, Role role) {
+    private String createAccessToken(User user) {
         PrivateKey privateKey = jwtService.readPrivateKey(jwtProperties.secret());
 
         Instant validity = Instant.now();
 
         return Jwt.claims()
                 .issuer(jwtProperties.issuer())
-                .subject(username)
+                .subject(user.getUsername())
                 .issuedAt(validity)
                 .expiresAt(validity.plus(jwtProperties.access(), ChronoUnit.HOURS))
-                .groups(String.valueOf(role))
+                .groups(String.valueOf(user.getRole()))
+                .claim("email", user.getEmail())
                 .jws()
                 .keyId(jwtProperties.secret())
                 .sign(privateKey);

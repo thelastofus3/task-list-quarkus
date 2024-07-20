@@ -5,6 +5,7 @@ import com.thelastofus.dto.user.UserRequest;
 import com.thelastofus.service.AuthService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -30,14 +31,14 @@ public class AuthResource {
     @POST
     @PermitAll
     @Path("/login")
-    public RestResponse<?> login(JwtRequest loginRequest) {
+    public RestResponse<?> login(@Valid JwtRequest loginRequest) {
         return RestResponse.ok(authService.login(loginRequest));
     }
 
     @POST
     @PermitAll
     @Path("/register")
-    public RestResponse<?> register(UserRequest userRequest) {
+    public RestResponse<?> register(@Valid UserRequest userRequest) {
         return RestResponse.status(RestResponse.Status.CREATED,
                 authService.create(userRequest));
     }

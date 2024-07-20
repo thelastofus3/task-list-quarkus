@@ -10,12 +10,20 @@ import java.util.List;
 @ApplicationScoped
 public class TaskRepository implements PanacheRepository<Task> {
 
-    List<Task> findAllByUsername(String username) {
-        return find("username", username).list();
+    public List<Task> findAllByUsername(String username) {
+        return find("SELECT t FROM Task t WHERE t.owner.username = :username",
+                Parameters.with("username", username)).list();
     }
 
-    boolean existsByIdAndOwnerId(Long taskId, Long ownerId) {
-        return find("id = :taskId and ownerId = :ownerId", Parameters.with("taskId", taskId).and("ownerId", ownerId)).firstResult() != null;
+    public boolean existsByIdAndOwnerId(Long taskId, Long ownerId) {
+        return find("SELECT t FROM Task t WHERE t.id = :taskId AND t.owner.id = :ownerId",
+                Parameters.with("taskId", taskId)
+                        .and("ownerId", ownerId)).firstResult() != null;
+    }
+
+    public Task save(Task task) {
+        persist(task);
+        return task;
     }
 
 }

@@ -35,13 +35,17 @@ public class ExceptionHandler implements ExceptionMapper<RuntimeException> {
                     Response.status(Response.Status.BAD_REQUEST).entity(ExceptionResponse.builder()
                             .message(e.getMessage())
                             .build()).build();
-            case PasswordMatchesException passwordMatchesException ->
-                    Response.status(Response.Status.CONFLICT).entity(ExceptionResponse.builder()
-                            .message(e.getMessage())
-                            .build()).build();
             case ConstraintViolationException constraintViolationException ->
                     Response.status(Response.Status.BAD_REQUEST).entity(ExceptionResponse.builder()
                             .message("Validation failed")
+                            .build()).build();
+            case PasswordMatchesException passwordMatchesException ->
+                    Response.status(Response.Status.BAD_REQUEST).entity(ExceptionResponse.builder()
+                            .message(e.getMessage())
+                            .build()).build();
+            case TaskOwnershipException taskOwnershipException ->
+                    Response.status(Response.Status.FORBIDDEN).entity(ExceptionResponse.builder()
+                            .message(e.getMessage())
                             .build()).build();
             case null, default ->
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ExceptionResponse.builder()
