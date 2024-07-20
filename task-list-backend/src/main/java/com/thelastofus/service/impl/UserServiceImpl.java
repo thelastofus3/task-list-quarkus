@@ -1,6 +1,6 @@
 package com.thelastofus.service.impl;
 
-import com.thelastofus.config.PasswordEncoder;
+import com.thelastofus.security.config.PasswordEncoder;
 import com.thelastofus.dto.user.UserRequest;
 import com.thelastofus.dto.user.UserResponse;
 import com.thelastofus.exception.EmailAlreadyExistsException;

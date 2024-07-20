@@ -15,7 +15,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @PasswordMatches
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "User Request")
+@Schema(description = "User Register Request")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRequest {
 
