@@ -1,6 +1,8 @@
 package com.thelastofus.resource;
 
 import com.thelastofus.service.UserService;
+import io.quarkus.security.identity.SecurityIdentity;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -19,17 +21,15 @@ import org.jboss.resteasy.reactive.RestResponse;
 public class UserResource {
 
     UserService userService;
+    SecurityIdentity securityIdentity;
 
-
-//    @GET
-//    @Operation(summary = "Get user")
-//    public RestResponse<?> getUser(@AuthenticationPrincipal JwtEntity jwt) {
-//        return ResponseEntity.ok(userService.getByUsername(jwt.getUsername()));
-//    }
 
     @GET
-    public RestResponse<?> getUser(Long id) {
-        return RestResponse.ok(userService.getById(id));
+    @RolesAllowed("ROLE_USER")
+    @Operation(summary = "Get user")
+    public RestResponse<?> getUser() {
+        return RestResponse.ok(userService.getByUsername(securityIdentity.getPrincipal().getName()));
     }
+
 
 }
