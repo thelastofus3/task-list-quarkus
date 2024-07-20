@@ -2,6 +2,7 @@ package com.thelastofus.security.jwt;
 
 import com.thelastofus.dto.jwt.JwtRequest;
 import com.thelastofus.dto.jwt.JwtResponse;
+import com.thelastofus.dto.user.UserRequest;
 import com.thelastofus.exception.InvalidPasswordException;
 import com.thelastofus.model.User;
 import com.thelastofus.security.config.PasswordEncoder;
@@ -22,8 +23,11 @@ public class AuthenticationManager {
         if (passwordEncoder.verify(request.getPassword(), user.getPassword())) {
             return tokenProvider.generateToken(user);
         } else {
-            throw new InvalidPasswordException("Password does not match");
-        }
+            throw new InvalidPasswordException("Password does not match");        }
+    }
+
+    public JwtResponse authenticate(User user) {
+        return tokenProvider.generateToken(user);
     }
 
 }

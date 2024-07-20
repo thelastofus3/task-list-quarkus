@@ -8,6 +8,7 @@ import com.thelastofus.security.jwt.AuthenticationManager;
 import com.thelastofus.service.AuthService;
 import com.thelastofus.service.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,11 +28,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public JwtResponse create(UserRequest userRequest) {
         User user = userService.saveUser(userRequest);
-        return authenticationManager.authenticate(user, JwtRequest.builder()
-                .password(user.getPassword())
-                .email(user.getEmail())
-                .build());
+        return authenticationManager.authenticate(user);
     }
 }

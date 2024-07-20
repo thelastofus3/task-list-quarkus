@@ -34,6 +34,9 @@ public class AuthResource {
         return RestResponse.ok(authService.login(loginRequest));
     }
 
+    @POST
+    @PermitAll
+    @Path("/register")
     public RestResponse<?> register(UserRequest userRequest) {
         return RestResponse.status(RestResponse.Status.CREATED,
                 authService.create(userRequest));
