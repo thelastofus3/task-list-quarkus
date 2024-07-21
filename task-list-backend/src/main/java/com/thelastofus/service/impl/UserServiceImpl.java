@@ -55,10 +55,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @Caching(cacheable = {
-//            @Cacheable(value = "UserService::getByUsername", key = "userRequest.username"),
-//            @Cacheable(value = "UserService::getByEmail", key = "userRequest.email")
-//    })
     public User saveUser(UserRequest userRequest) {
         validateUserRequest(userRequest);
 

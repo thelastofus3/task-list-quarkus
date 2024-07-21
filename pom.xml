@@ -8,5 +8,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>task-list-backend</module>
+        <module>task-list-mail</module>
     </modules>
 </project>

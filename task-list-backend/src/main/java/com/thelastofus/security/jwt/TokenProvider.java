@@ -19,7 +19,6 @@ import java.time.temporal.ChronoUnit;
 public class TokenProvider {
 
     JwtService jwtService;
-
     JwtProperties jwtProperties;
 
     public JwtResponse generateToken(User user) {

@@ -20,7 +20,7 @@ import org.jboss.resteasy.reactive.RestResponse;
 @ApplicationScoped
 @Path("/api/v1/auth")
 @RequiredArgsConstructor
-@Tag(name = "User Resource")
+@Tag(name = "Auth Resource")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

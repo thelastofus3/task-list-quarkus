@@ -23,7 +23,8 @@ public class AuthenticationManager {
         if (passwordEncoder.verify(request.getPassword(), user.getPassword())) {
             return tokenProvider.generateToken(user);
         } else {
-            throw new InvalidPasswordException("Password does not match");        }
+            throw new InvalidPasswordException("Password does not match");
+        }
     }
 
     public JwtResponse authenticate(User user) {
