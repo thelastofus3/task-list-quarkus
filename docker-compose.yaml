@@ -15,6 +15,8 @@ services:
       - '3306:3306'
     volumes:
       - db:/var/lib/mysql
+    networks:
+      - kafka-network
   redis:
     image: 'redis:latest'
     restart: always
@@ -53,31 +55,34 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     networks:
       - kafka-network
-  task-list-backend:
-    image: task-list/task-list-backend:1.0-${QUARKUS_MODE:-jvm}
-    build:
-      context: task-list-backend
-      dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
-    depends_on:
-      - kafka
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    ports:
-      - "8080:8080"
-    networks:
-      - kafka-network
-
-  task-list-mail:
-    image: task-list/task-list-mail:1.0-${QUARKUS_MODE:-jvm}
-    build:
-      context: task-list-mail
-      dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
-    depends_on:
-      - kafka
-    environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    networks:
-      - kafka-network
+#  task-list-backend:
+#    image: task-list/task-list-backend:1.0-${QUARKUS_MODE:-jvm}
+#    build:
+#      context: task-list-backend
+#      dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
+#    depends_on:
+#      - kafka
+#      - mysql
+#    environment:
+#      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - kafka-network
+#
+#  task-list-mail:
+#    image: task-list/task-list-mail:1.0-${QUARKUS_MODE:-jvm}
+#    build:
+#      context: task-list-mail
+#      dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
+#    depends_on:
+#      - kafka
+#    environment:
+#      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#    ports:
+#      - "8081:8080"
+#    networks:
+#      - kafka-network
 networks:
   kafka-network:
     name: kafkastart
