@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "task")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task implements Serializable {
 
