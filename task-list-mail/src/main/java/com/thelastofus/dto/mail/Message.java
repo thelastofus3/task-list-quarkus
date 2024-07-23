@@ -18,4 +18,6 @@ public class Message  {
 
     String title;
 
+    MailType type;
+
 }

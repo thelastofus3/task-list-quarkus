@@ -1,5 +1,6 @@
 package com.thelastofus.service.impl;
 
+import com.thelastofus.dto.mail.MailType;
 import com.thelastofus.dto.mail.Message;
 import com.thelastofus.service.KafkaService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,11 +14,12 @@ public class KafkaServiceImpl implements KafkaService {
     Emitter<Message> emitter;
 
     @Override
-    public void send(String email, String username) {
+    public void send(String email, String username, MailType type) {
         emitter.send(Message.builder()
                 .username(username)
                 .email(email)
                 .title("Welcome to Task List")
+                .type(type)
                 .build());
     }
 

@@ -2,6 +2,7 @@ package com.thelastofus.security.jwt;
 
 import com.thelastofus.dto.jwt.JwtRequest;
 import com.thelastofus.dto.jwt.JwtResponse;
+import com.thelastofus.dto.mail.MailType;
 import com.thelastofus.dto.mail.Message;
 import com.thelastofus.exception.InvalidPasswordException;
 import com.thelastofus.model.User;
@@ -31,7 +32,7 @@ public class AuthenticationManager {
     }
 
     public JwtResponse authenticate(User user) {
-        kafkaService.send(user.getEmail(), user.getUsername());
+        kafkaService.send(user.getEmail(), user.getUsername(), MailType.REGISTRATION);
         return tokenProvider.generateToken(user);
     }
 

@@ -9,5 +9,6 @@
     <modules>
         <module>task-list-backend</module>
         <module>task-list-mail</module>
+        <module>task-list-scheduled</module>
     </modules>
 </project>

@@ -5,5 +5,5 @@ import io.quarkus.qute.CheckedTemplate;
 
 @CheckedTemplate
 public class Templates {
-    public static native MailTemplate.MailTemplateInstance page(String username);
+    public static native MailTemplate.MailTemplateInstance registration(String username);
 }
