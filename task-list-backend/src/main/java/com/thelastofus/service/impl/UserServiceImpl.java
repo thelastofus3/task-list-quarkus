@@ -1,5 +1,6 @@
 package com.thelastofus.service.impl;
 
+import com.thelastofus.exception.PasswordMatchesException;
 import com.thelastofus.exception.UsernameAlreadyExistsException;
 import com.thelastofus.security.config.PasswordEncoder;
 import com.thelastofus.dto.user.UserRequest;
@@ -72,6 +73,9 @@ public class UserServiceImpl implements UserService {
         }
         if (userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistsException("This username is already taken");
+        }
+        if (!userRequest.getPassword().equals(userRequest.getMatchingPassword())) {
+            throw new PasswordMatchesException("Password do not match");
         }
     }
 

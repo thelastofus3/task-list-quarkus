@@ -1,7 +1,6 @@
 package com.thelastofus.resource;
 
 import com.thelastofus.service.UserService;
-import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.*;

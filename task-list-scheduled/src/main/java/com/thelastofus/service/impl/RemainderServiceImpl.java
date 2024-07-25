@@ -1,14 +1,11 @@
 package com.thelastofus.service.impl;
 
-import com.thelastofus.dto.mail.MailType;
-import com.thelastofus.dto.mail.Message;
 import com.thelastofus.model.Status;
 import com.thelastofus.model.Task;
 import com.thelastofus.model.User;
 import com.thelastofus.service.KafkaService;
 import com.thelastofus.service.RemainderService;
 import com.thelastofus.service.UserService;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.AccessLevel;
@@ -18,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -58,7 +54,7 @@ public class RemainderServiceImpl implements RemainderService {
         String completedTasksStr = formatTaskList("Completed tasks", completedTasks);
         String incompletedTasksStr = formatTaskList("Incompleted tasks", incompletedTasks);
 
-        return String.format("%s\n\n%s", completedTasksStr, incompletedTasksStr);
+        return String.format("\n%s\n%s", completedTasksStr, incompletedTasksStr);
     }
 
     private String formatTaskList(String title, List<Task> tasks) {

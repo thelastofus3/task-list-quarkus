@@ -1,6 +1,5 @@
 package com.thelastofus.exception;
 
-import jakarta.ws.rs.core.Response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

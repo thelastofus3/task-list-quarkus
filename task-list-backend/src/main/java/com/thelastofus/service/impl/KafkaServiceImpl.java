@@ -19,7 +19,7 @@ public class KafkaServiceImpl implements KafkaService {
                 .username(username)
                 .email(email)
                 .title("Welcome to Task List")
-                .body("")
+                .body("We're thrilled to welcome you to TaskList, your new go-to platform for efficient task management and productivity boosting!")
                 .type(type)
                 .build());
     }

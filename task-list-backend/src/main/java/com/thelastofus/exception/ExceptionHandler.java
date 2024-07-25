@@ -1,19 +1,12 @@
 package com.thelastofus.exception;
 
-import io.quarkus.security.AuthenticationException;
-import io.quarkus.security.AuthenticationFailedException;
-import io.quarkus.security.UnauthorizedException;
 import jakarta.annotation.Priority;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.ws.rs.NotAuthorizedException;
-import jakarta.ws.rs.Priorities;
-import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import org.apache.kafka.common.errors.InvalidRequestException;
 
-import java.nio.file.AccessDeniedException;
 
 @Provider
 @Priority(1)
