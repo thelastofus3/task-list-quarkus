@@ -20,4 +20,6 @@ public class Message {
 
     MailType type;
 
+    String body;
+
 }
