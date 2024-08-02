@@ -17,7 +17,14 @@ services:
       - db:/var/lib/mysql
     networks:
       - kafka-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
   redis:
+    container_name: redis
     image: 'redis:latest'
     restart: always
     ports:
@@ -37,7 +44,6 @@ services:
       LOG_DIR: /tmp/logs
     networks:
       - kafka-network
-
   kafka:
     image: quay.io/strimzi/kafka:0.23.0-kafka-2.8.0
     command: [
@@ -65,11 +71,15 @@ services:
 #      - mysql
 #    environment:
 #      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#      DB_HOST: mysql
+#      DB_PORT: 3306
+#      DB_USER: admin
+#      DB_PASSWORD: admin
+#      DB_NAME: taskList
 #    ports:
 #      - "8080:8080"
 #    networks:
 #      - kafka-network
-#
 #  task-list-mail:
 #    image: task-list/task-list-mail:1.0-${QUARKUS_MODE:-jvm}
 #    build:
@@ -81,6 +91,20 @@ services:
 #      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 #    ports:
 #      - "8081:8080"
+#    networks:
+#      - kafka-network
+#  task-list-scheduled:
+#    image: task-list/task-list-scheduled:1.0-${QUARKUS_MODE:-jvm}
+#    build:
+#      context: task-list-scheduled
+#      dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
+#    depends_on:
+#      - kafka
+#      - mysql
+#    environment:
+#      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#    ports:
+#      - "8082:8080"
 #    networks:
 #      - kafka-network
 networks:

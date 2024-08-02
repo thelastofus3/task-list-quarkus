@@ -29,8 +29,7 @@ public class RemainderServiceImpl implements RemainderService {
     KafkaService kafkaService;
 
     @Override
-//    @Scheduled(cron = "0 0 * * * ?")
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void remindForTask() {
         List<User> users = userService.getUsers();
         for (User user : users) {
@@ -41,20 +40,20 @@ public class RemainderServiceImpl implements RemainderService {
         Map<Status, List<Task>> taskByStatus = user.getTasks().stream()
                 .collect(Collectors.groupingBy(Task::getStatus));
         List<Task> completedTasks = taskByStatus.getOrDefault(Status.DONE, List.of());
-        List<Task> incompletedTasks = user.getTasks().stream()
+        List<Task> uncompletedTasks = user.getTasks().stream()
                 .filter(task -> task.getStatus() != Status.DONE)
                 .collect(Collectors.toList());
 
-        String messageBody = formatTaskMessage(completedTasks, incompletedTasks);
+        String messageBody = formatTaskMessage(completedTasks, uncompletedTasks);
 
         kafkaService.send(user.getEmail(), user.getUsername(), messageBody);
     }
 
     private String formatTaskMessage(List<Task> completedTasks, List<Task> incompletedTasks) {
         String completedTasksStr = formatTaskList("Completed tasks", completedTasks);
-        String incompletedTasksStr = formatTaskList("Incompleted tasks", incompletedTasks);
+        String uncompletedTasksStr = formatTaskList(" Uncompleted tasks", incompletedTasks);
 
-        return String.format("\n%s\n%s", completedTasksStr, incompletedTasksStr);
+        return String.format("\n%s\n%s", completedTasksStr, uncompletedTasksStr);
     }
 
     private String formatTaskList(String title, List<Task> tasks) {
