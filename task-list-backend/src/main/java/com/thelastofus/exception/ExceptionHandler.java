@@ -47,6 +47,10 @@ public class ExceptionHandler implements ExceptionMapper<RuntimeException> {
                     Response.status(Response.Status.FORBIDDEN).entity(ExceptionResponse.builder()
                             .message(e.getMessage())
                             .build()).build();
+            case InvalidPasswordException invalidPasswordException ->
+                    Response.status(Response.Status.BAD_REQUEST).entity(ExceptionResponse.builder()
+                            .message(e.getMessage())
+                            .build()).build();
             case null, default ->
                     Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ExceptionResponse.builder()
                             .message(e.getMessage())

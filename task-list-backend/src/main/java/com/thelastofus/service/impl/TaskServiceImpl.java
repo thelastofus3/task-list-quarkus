@@ -47,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
                 .description(createTaskRequest.getDescription())
                 .owner(user)
                 .created_at(LocalDateTime.now())
-                .status(Status.TODO)
+                .status(createTaskRequest.getStatus())
                 .build());
         return taskMapper.convertToTaskResponse(task);
     }

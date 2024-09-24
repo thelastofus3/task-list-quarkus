@@ -16,7 +16,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class JwtRequest {
 
     @Schema(name = "email", example = "user@gmail.com")
-    @NotBlank(message = "Username should not be empty")
+    @NotBlank(message = "Email should not be empty")
     String email;
     @Schema(name = "password", example = "password")
     @NotBlank(message = "Password should not be empty")

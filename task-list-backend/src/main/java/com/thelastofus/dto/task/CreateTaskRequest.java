@@ -1,6 +1,8 @@
 package com.thelastofus.dto.task;
 
+import com.thelastofus.model.Status;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -20,5 +22,8 @@ public class CreateTaskRequest {
     String title;
     @Schema(name = "description", example = "Fantasy about adventures on the island")
     String description;
+    @Schema(name = "status", example = "TODO")
+    @NotNull(message = "Status should not be empty")
+    Status status;
 
 }

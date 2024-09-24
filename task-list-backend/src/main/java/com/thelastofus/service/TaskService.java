@@ -3,7 +3,6 @@ package com.thelastofus.service;
 import com.thelastofus.dto.task.CreateTaskRequest;
 import com.thelastofus.dto.task.TaskResponse;
 import com.thelastofus.dto.task.UpdateTaskRequest;
-import com.thelastofus.model.Task;
 
 import java.util.List;
 

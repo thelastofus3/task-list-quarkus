@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @CacheResult(cacheName = "userService::getByUsername")
     public UserResponse getByUsername(@CacheKey String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @CacheResult(cacheName = "userService::getByEmail")
     public User getByEmail(@CacheKey String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
     }
 
