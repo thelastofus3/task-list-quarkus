@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles/Main.module.scss'
-import {Card} from "./ui/Card.jsx";
 import {userService} from "./service/MainService.jsx";
 import {useNavigate} from "react-router-dom";
 import {TaskList} from "./ui/TaskList.jsx";
@@ -46,4 +45,3 @@ export const Main = () => {
         </div>
     );
 };
-
