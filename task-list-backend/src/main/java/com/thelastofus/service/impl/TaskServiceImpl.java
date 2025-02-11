@@ -68,16 +68,11 @@ public class TaskServiceImpl implements TaskService {
         User user = userService.getByEmail(userEmail);
         validateTaskAndOwner(updateTaskRequest.getId(), user.getId());
         Task task = taskRepository.findById(updateTaskRequest.getId());
-        return taskMapper.convertToTaskResponse(
-                Task.builder()
-                        .id(task.getId())
-                        .title(updateTaskRequest.getTitle())
-                        .description(updateTaskRequest.getDescription())
-                        .owner(task.getOwner())
-                        .status(updateTaskRequest.getStatus())
-                        .created_at(task.getCreated_at())
-                        .build()
-        );
+        task.setTitle(updateTaskRequest.getTitle())
+                .setDescription(updateTaskRequest.getDescription())
+                .setStatus(updateTaskRequest.getStatus());
+        taskRepository.save(task);
+        return taskMapper.convertToTaskResponse(task);
     }
 
     private void validateTaskAndOwner(Long taskId, Long userId) {

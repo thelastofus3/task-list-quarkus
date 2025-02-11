@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @CacheResult(cacheName = "userService::getByEmail")
     public User getByEmail(@CacheKey String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
     }
 

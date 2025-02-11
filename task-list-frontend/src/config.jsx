@@ -40,4 +40,4 @@ export const initialState = {
     matchingPassword: ""
 };
 
-export const taskTypes = ["TODO", "IN PROGRESS", "DONE"];
+export const taskTypes = ["TODO", "IN_PROGRESS", "DONE"];

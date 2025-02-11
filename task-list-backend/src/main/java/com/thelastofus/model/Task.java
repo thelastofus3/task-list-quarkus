@@ -3,6 +3,7 @@ package com.thelastofus.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "task")
+@Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task implements Serializable {
 
@@ -31,6 +33,7 @@ public class Task implements Serializable {
     String description;
     @ManyToOne
     @Builder.Default
+    @ToString.Exclude
     @JsonBackReference
     @JoinColumn(name = "user_id")
     User owner = new User();

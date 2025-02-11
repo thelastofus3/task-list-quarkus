@@ -12,6 +12,11 @@ export const Card = ({tasks, type}) => {
         setModalOpen(!isModalOpen);
     }
 
+    const handleCreateNewTask = () => {
+        setCurrentTask(null);
+        setModalOpen(!isModalOpen);
+    }
+
     const handleDescription = (task) => {
         setViewDescriptionId(viewDescriptionId === task.id ? null : task.id);
     }
@@ -20,7 +25,7 @@ export const Card = ({tasks, type}) => {
         <div className="col-lg-3 col-md-4 col-sm-12 mb-4">
             <div className="card h-100">
                 <div className="card-body">
-                    <h4>{type}</h4>
+                    <h4>{type.replace('_', ' ')}</h4>
                     {tasks.length > 0 ? (
                         tasks.map((task) => (
                             <TaskInfo
@@ -36,7 +41,7 @@ export const Card = ({tasks, type}) => {
                         <TaskInfo/>
                     )}
                     <div className="d-grid gap-2">
-                        <button className="btn d-flex align-items-center">
+                        <button className="btn d-flex align-items-center" onClick={handleCreateNewTask}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                  fill="currentColor"
                                  className="bi bi-plus-lg" viewBox="0 0 16 16">
