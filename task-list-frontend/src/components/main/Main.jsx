@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles/Main.module.scss'
-import {userService} from "./service/MainService.jsx";
+import {userService} from "./service/userService.jsx";
 import {useNavigate} from "react-router-dom";
 import {TaskList} from "./ui/TaskList.jsx";
 

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import styles from "../styles/Main.module.scss";
 import {taskTypes} from "../../../config.jsx";
-import {taskService} from "../service/MainService.jsx";
+import {taskService} from "../service/taskService.jsx";
 
-export const Sidebar = ({show, task, onEdit}) => {
+export const Sidebar = ({show, task, onEdit, setTasks}) => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -18,9 +18,13 @@ export const Sidebar = ({show, task, onEdit}) => {
     const handleSave = async () => {
         try {
             if (task?.id) {
-                await taskService.updateTask({id: task.id, title, description, status});
+
+                const updatedTask = { id: task.id, title, description, status };
+                await taskService.updateTask(updatedTask);
+                setTasks((prev) => prev.map((t) => (t.id === task.id ? updatedTask : t)));
             } else {
-                await taskService.createTask({title, description, status});
+                const newTask = await taskService.createTask({ title, description, status });
+                setTasks((prev) => [...prev, newTask.data]);
             }
             onEdit();
         } catch (error) {

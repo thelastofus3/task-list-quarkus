@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {TaskInfo} from "./TaskInfo.jsx";
 import {Sidebar} from "./Sidebar.jsx";
+import styles from "./../styles/Main.module.scss";
+import {taskService} from "../service/taskService.jsx";
 
-export const Card = ({tasks, type}) => {
+export const Card = ({tasks, type, setTasks, allTasks}) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
     const [viewDescriptionId, setViewDescriptionId] = useState(null);
@@ -10,6 +12,15 @@ export const Card = ({tasks, type}) => {
     const handleEdit = (task) => {
         setCurrentTask(task);
         setModalOpen(!isModalOpen);
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            await taskService.deleteTask(id);
+            setTasks(allTasks.filter(task => task.id !== id));
+        } catch (error) {
+            console.error("Error while try to delete task:", error);
+        }
     }
 
     const handleCreateNewTask = () => {
@@ -34,6 +45,7 @@ export const Card = ({tasks, type}) => {
                                 description={task.description}
                                 onDescription={() => handleDescription(task)}
                                 onEdit={() => handleEdit(task)}
+                                onDelete={() => handleDelete(task.id)}
                                 viewDescription={viewDescriptionId === task.id}
                             />
                         ))
@@ -41,7 +53,10 @@ export const Card = ({tasks, type}) => {
                         <TaskInfo/>
                     )}
                     <div className="d-grid gap-2">
-                        <button className="btn d-flex align-items-center" onClick={handleCreateNewTask}>
+                        <button className={`${styles.anim_icon} btn d-flex align-items-center`}
+                                onClick={handleCreateNewTask}
+                                style={{ '--hover-color': '#28a745' }}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                  fill="currentColor"
                                  className="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -53,7 +68,7 @@ export const Card = ({tasks, type}) => {
                     </div>
                 </div>
             </div>
-            <Sidebar show={isModalOpen} task={currentTask} onEdit={handleEdit}/>
+            <Sidebar show={isModalOpen} task={currentTask} onEdit={handleEdit} setTasks={setTasks} />
         </div>
     );
 };
