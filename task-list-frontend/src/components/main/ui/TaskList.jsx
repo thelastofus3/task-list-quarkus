@@ -1,34 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {taskService} from "../service/taskService.jsx";
 import {Card} from "./Card.jsx";
 import {taskTypes} from "../../../config.jsx";
+import {useTasks} from "../hooks/useTasks.jsx";
 
 export const TaskList = () => {
-    const [tasks, setTasks] = useState([]);
+    const { tasks, isLoading, error, updateTask, createTask, deleteTask } = useTasks();
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await taskService.getTasks();
-                setTasks(response.data);
-            } catch (error) {
-                console.log('Error fetching tasks', error);
-            }
-        };
+    if (isLoading) return <div className="text-center mt-4">Loading tasks...</div>;
+    if (error) return <div className="text-center mt-4 text-danger">{error}</div>;
 
-        fetchTasks();
-    }, []);
     return (
         <div className="row justify-content-center mt-4 mx-5">
             {taskTypes.map(type => (
                 <Card key={type}
-                      tasks={tasks.filter(task => task.status === type)}
                       type={type}
-                      setTasks={setTasks}
-                      allTasks={tasks}
+                      tasks={tasks.filter(task => task.status === type)}
+                      onTaskUpdate={updateTask}
+                      onTaskCreate={createTask}
+                      onTaskDelete={deleteTask}
                 />
             ))}
-
         </div>
     );
 };

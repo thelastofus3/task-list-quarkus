@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "../styles/Main.module.scss";
 
-export const TaskInfo = ({name, onEdit, onDelete, onDescription, description, viewDescription}) => {
+export const TaskInfo = ({ task, name, onEdit, onDelete, onDescription, showDescription }) => {
     return (<>
         <div
             className={`${styles.main__task_name} p-2 my-3 rounded-4 d-flex align-items-center justify-content-between`}>
@@ -27,12 +27,11 @@ export const TaskInfo = ({name, onEdit, onDelete, onDescription, description, vi
                                     </svg>
                         </span>
                     </span>
-
             }
         </div>
-        {viewDescription && description && (
+        {showDescription && task.description && (
             <div className="d-flex align-items-center mt-2 my-2 p-2 border rounded-3 bg-light">
-                <p className="m-0">{description}</p>
+                <p className="m-0">{task.description}</p>
             </div>)}
     </>);
 };
